@@ -108,17 +108,7 @@ class StockDataAnalysis:
             logger.info("Starting Stock Data Analysis")
             try:
                 self.spark = SparkSession.builder \
-                    .appName("StockDataAnalysis") \
-                    .config("spark.hadoop.fs.s3a.access.key", AWS_ACCESS_KEY_ID) \
-                    .config("spark.hadoop.fs.s3a.secret.key", AWS_SECRET_ACCESS_KEY) \
-                    .config("spark.hadoop.fs.s3a.endpoint", "s3.amazonaws.com") \
-                    .config("spark.jars.packages",
-                            "org.apache.hadoop:hadoop-aws:3.2.0,com.amazonaws:aws-java-sdk:1.11.901") \
-                    .getOrCreate()
-
-                self.spark.jsc.hadoopConfiguration().set("spark.hadoop.fs.s3a.access.key", AWS_ACCESS_KEY_ID)
-                self.spark.jsc.hadoopConfiguration().set("spark.hadoop.fs.s3a.secret.key", AWS_SECRET_ACCESS_KEY)
-                self.spark.jsc.hadoopConfiguration().set("spark.hadoop.fs.s3a.endpoint", "s3.amazonaws.com")
+                    .appName("StockDataAnalysis").getOrCreate()
 
             except SparkSessionCreationError as e:
                 logger.error(f"Spark session creation failed: {e}")
